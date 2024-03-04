@@ -1,14 +1,24 @@
-# auth/views.py
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login, logout
-from allauth.account.views import SignupView, PasswordResetView, ConfirmEmailView
+from django.contrib.auth.models import User
 
 @api_view(['POST'])
 def register(request):
-    signup_view = SignupView.as_view()
-    return signup_view(request)
+    username = request.data.get('username')
+    email = request.data.get('email')
+    password = request.data.get('password')
+
+    # Check if username or email already exists
+    if User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists():
+        return Response({'error': 'Username or email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Create a new user
+    user = User.objects.create_user(username=username, email=email, password=password)
+    user.save()
+
+    return Response({'message': 'Registration successful'}, status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
 def login_user(request):
@@ -30,10 +40,5 @@ def logout_user(request):
 
 @api_view(['POST'])
 def forgot_password(request):
-    password_reset_view = PasswordResetView.as_view()
-    return password_reset_view(request)
-
-@api_view(['GET'])
-def verify_email(request, key):
-    confirm_email_view = ConfirmEmailView.as_view()
-    return confirm_email_view(request._request, key=key)
+    # Implement your own logic for password reset
+    return Response({'message': 'Password reset request received'}, status=status.HTTP_200_OK)

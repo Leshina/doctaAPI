@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-pj-t-*)unj%n!e*nuu9o3v#ot!b!tu@^!wzj#-=6@y9r7rfaoi
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://leshina.pythonanywhere.com']
+ALLOWED_HOSTS = ['leshina.pythonanywhere.com']
 
 
 # Application definition
@@ -138,7 +138,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -166,7 +166,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # Django Allauth settings
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Enable email verification
-ACCOUNT_EMAIL_REQUIRED = True  # Require email address during registration
-ACCOUNT_USERNAME_REQUIRED = False  # Do not require username during registration
-SITE_ID = 1  # ID of the current site for Django Allauth
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  
+ACCOUNT_EMAIL_REQUIRED = True  
+ACCOUNT_USERNAME_REQUIRED = False  
+SITE_ID = 1  
